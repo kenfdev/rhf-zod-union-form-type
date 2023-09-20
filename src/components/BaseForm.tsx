@@ -1,7 +1,17 @@
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { CreateFormSchema } from './CreateForm/useCreateForm';
+import { UpdateFormSchema } from './UpdateForm/useUpdateForm';
+
+type BaseSchema = {
+  [K in keyof CreateFormSchema & keyof UpdateFormSchema]:
+    | CreateFormSchema[K]
+    | UpdateFormSchema[K];
+};
+
 interface Props {
   onSubmit: () => void;
-  register: any;
-  errors: any;
+  register: UseFormRegister<BaseSchema>;
+  errors: FieldErrors<BaseSchema>;
 }
 
 export default function BaseForm({ onSubmit, register, errors }: Props) {
